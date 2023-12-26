@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-<<<<<<< HEAD
-from models.base_model import BaseModel
-=======
 from models.base_model import BaseModel, Base
 from models.review import Review
 from models.amenity import Amenity
@@ -17,7 +14,6 @@ place_amenity = Table('place_amenity', metadata,
                       Column('amenity_id', String(60),
                              ForeignKey('amenities.id'), nullable=False)
                       )
->>>>>>> Vicksversion
 
 
 class Place(BaseModel):
