@@ -15,11 +15,15 @@ class BaseModel:
             self.updated_at = datetime.now()
             storage.new(self)
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+            for key in kwargs.keys():
+                self.__dict__[key] = kwargs[key]
+                if key == "created_at" or key == "updated_at":
+                    kwargs[key] = datetime.strptime(kwargs[key],
+                                                    "%Y-%m-%dT%H:%M:%S.%f")
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
+            if 'id' not in kwargs.keys():
+                kwargs['id'] = str(uuid.uuid4())
             self.__dict__.update(kwargs)
 
     def __str__(self):
