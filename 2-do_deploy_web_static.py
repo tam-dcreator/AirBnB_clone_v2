@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+import os.path
+from fabric.api import env
+from fabric.api import put
+from fabric.api import run
 """
 Fabric script (based on the file 1-pack_web_static.py)
 that distributes an archive to your web servers, using the function do_deploy
@@ -19,4 +23,17 @@ def do_deploy(archive_path):
         on the web server, linked to the new version of your code
         (/data/web_static/releases/<archive filename without extension>)
     """
-    pass
+    env.hosts = ['100.25.151.158', '34.207.57.64']
+    if not os.path.exists(archive_path):
+        return False
+    filename = archive_path.split('/')[-1].split('.tgz')[0]
+    dest = "/data/web_static/releases/{}".format(filename)
+    if put(local_path=archive_path, remote_path="/tmp/").failed:
+        return False
+    if run('tar -x {} {}'.format(archive_path, dest)).failed:
+        return False
+    if run('rm /data/web_static/current').failed:
+        return False
+    if run('ln -s {} /data/web_static/current'.format(dest)).failed:
+        return False
+    return True
