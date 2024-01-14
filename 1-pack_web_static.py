@@ -11,7 +11,7 @@ def do_pack():
     of the web_static folder of your AirBnB Clone repo
     """
     current = datetime.now()
-    name = "web_static_{}{}{}{}{}{}.tgz".format(
+    name = "versions/web_static_{}{}{}{}{}{}.tgz".format(
             current.year, current.month, current.day,
             current.hour, current.minute, current.second)
     if not os.path.exists('versions'):
