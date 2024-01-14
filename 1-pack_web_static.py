@@ -16,7 +16,7 @@ def do_pack():
             current.hour, current.minute, current.second)
     if not os.path.exists('versions'):
         os.mkdir('versions')
-    if local("tar -cvf %s web_static" % (name)).succeeded:
+    if local("tar -cvzf %s web_static" % (name)).succeeded:
         return name
     else:
         return None
