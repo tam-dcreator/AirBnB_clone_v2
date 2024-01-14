@@ -66,6 +66,17 @@ Advanced syntax is implemented for the following commands:
     * update - Updates existing attributes an object based on class name and UUID
 
 <br>
+<h1>Nginx web configuration objctives</h1>
+<ul>
+<li>What is Fabric</li>
+<li>How to deploy code to a server easily</li>
+<li>What is a tgz archive</li>
+<li>How to execute Fabric command locally</li>
+<li>How to execute Fabric command remotely</li>
+<li>How to transfer files with Fabric</li>
+<li>How to manage Nginx configuration</li>
+<li>What is the difference between root and alias in a Nginx configuration</li>
+</ul>
 <br>
 <center> <h2>Examples</h2> </center>
 <h3>Primary Command Syntax</h3>
@@ -82,7 +93,6 @@ Usage: create <class_name>
 ```
 ###### Example 1: Show an object
 Usage: show <class_name> <_id>
-
 ```
 (hbnb) show BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
 [BaseModel] (3aa5babc-efb6-4041-bfe9-3cc9727588f8) {'id': '3aa5babc-efb6-4041-bfe9-3cc9727588f8', 'created_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96959), 
