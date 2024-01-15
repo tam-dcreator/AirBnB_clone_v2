@@ -28,7 +28,7 @@ def do_clean(number=0):
     if number >= 0:
         if number in (0, 1):
             for i in range(len(files) - 1):
-                os.remove("/versions/{}".format(files[i]))
+                run("rm -rf /versions/{}".format(files[i]))
         else:
             for i in range(len(files) - number):
-                os.remove("/versions/{}".format(files[i]))
+                run("rm -rf /versions/{}".format(files[i]))
