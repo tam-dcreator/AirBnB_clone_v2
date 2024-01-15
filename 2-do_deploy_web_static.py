@@ -29,8 +29,7 @@ def do_deploy(archive_path):
     full_filename = archive_path.split('/')[-1]
     filename = full_filename.split('.tgz')[0]
     dest = "/data/web_static/releases/{}".format(filename)
-    if put(local_path=archive_path,
-            remote_path="/tmp/{}".format(full_filename)).failed:
+    if put(local_path=archive_path, remote_path="/tmp/").failed:
         return False
     if run('tar -xzf /tmp/{} -C {}'.format(archive_path, dest)).failed:
         return False
