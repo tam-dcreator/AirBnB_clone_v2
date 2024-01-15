@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import os
-from fabric import env
+from fabric.api import env
 env.hosts = ['100.25.151.158', '34.207.57.64']
 """
 Fabric script (based on the file 3-deploy_web_static.py) that
