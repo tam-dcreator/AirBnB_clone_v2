@@ -26,13 +26,15 @@ def do_deploy(archive_path):
     """
     if not os.path.exists(archive_path):
         return False
-    filename = archive_path.split('/')[-1].split('.tgz')[0]
+    full_filename = archive_path.split('/')[-1]
+    filename = full_filename.split('.tgz')[0]
     dest = "/data/web_static/releases/{}".format(filename)
-    if put(local_path=archive_path, remote_path="/tmp/").failed:
+    if put(local_path=archive_path,
+            remote_path="/tmp/{}".format(full_filename)).failed:
         return False
-    if run('tar -x {} {}'.format(archive_path, dest)).failed:
+    if run('tar -xzf /tmp/{} -C {}'.format(archive_path, dest)).failed:
         return False
-    if run('rm /data/web_static/current').failed:
+    if run('rm -rf /data/web_static/current').failed:
         return False
     if run('ln -s {} /data/web_static/current'.format(dest)).failed:
         return False
