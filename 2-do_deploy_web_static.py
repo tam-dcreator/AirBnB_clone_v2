@@ -3,6 +3,7 @@ import os.path
 from fabric.api import env
 from fabric.api import put
 from fabric.api import run
+env.hosts = ['100.25.151.158', '34.207.57.64']
 """
 Fabric script (based on the file 1-pack_web_static.py)
 that distributes an archive to your web servers, using the function do_deploy
@@ -23,7 +24,6 @@ def do_deploy(archive_path):
         on the web server, linked to the new version of your code
         (/data/web_static/releases/<archive filename without extension>)
     """
-    env.hosts = ['100.25.151.158', '34.207.57.64']
     if not os.path.exists(archive_path):
         return False
     filename = archive_path.split('/')[-1].split('.tgz')[0]
