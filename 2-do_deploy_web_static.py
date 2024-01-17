@@ -31,7 +31,10 @@ def do_deploy(archive_path):
         filename = full_filename.split('.tgz')[0]
         dest = "/data/web_static/releases/{}".format(filename)
         put(local_path=archive_path, remote_path="/tmp/")
-        run('tar -xzf /tmp/{} -C {}'.format(archive_path, dest))
+        if run('mkdir -p {}'.format(dest)).failed:
+            return False
+        print("yes")
+        run('tar -xzf /tmp/{} -C {}'.format(full_filename, dest))
         run('rm -rf /data/web_static/current')
         run('ln -s {} /data/web_static/current'.format(dest))
         return True
