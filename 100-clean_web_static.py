@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import os
-from fabric.api import env
+from fabric.api import *
 env.hosts = ['100.25.151.158', '34.207.57.64']
 """
 Fabric script (based on the file 3-deploy_web_static.py) that
@@ -21,16 +21,15 @@ def do_clean(number=0):
         (all archives minus the number to keep) in the
         /data/web_static/releases folder of both of your web servers
     """
-    files = os.listdir('/versions').sort()
-    for f in files:
-        if 'web_static' not in f or '.tgz' not in f:
-            files.remove(f)
-    if number >= 0:
-        if number in (0, 1):
-            for i in range(len(files) - 1):
-                run("rm -rf /versions/{}".format(files[i]))
-                local("rm -rf /versions/{}".format(files[i]))
-        else:
-            for i in range(len(files) - number):
-                run("rm -rf /versions/{}".format(files[i]))
-                local("rm -rf /versions/{}".format(files[i]))
+    number = 1 if int(number) == 0 else int(number)
+
+    archives = sorted(os.listdir("versions"))
+    [archives.pop() for i in range(number)]
+    with lcd("versions"):
+        [local("rm ./{}".format(a)) for a in archives]
+
+    with cd("/data/web_static/releases"):
+        archives = run("ls -tr").split()
+        archives = [a for a in archives if "web_static_" in a]
+        [archives.pop() for i in range(number)]
+        [run("rm -rf ./{}".format(a)) for a in archives]
