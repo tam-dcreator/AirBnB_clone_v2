@@ -35,6 +35,15 @@ def do_deploy(archive_path):
         return False
     if run('tar -xzf /tmp/{} -C {}'.format(full_filename, dest)).failed:
         return False
+    if run("rm /tmp/{}".format(full_filename)).failed is True:
+        return False
+    if run("mv /data/web_static/releases/{}/web_static/* "
+           "/data/web_static/releases/{}/".format(
+               filename, filename)).failed is True:
+        return False
+    if run("rm -rf /data/web_static/releases/{}/web_static".
+           format(filename)).failed is True:
+        return False
     if run('rm -rf /data/web_static/current').failed:
         return False
     if run('ln -s {} /data/web_static/current'.format(dest)).failed:
