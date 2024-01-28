@@ -8,9 +8,10 @@ Routes:
     /hbnb: display “HBNB”
     /c/<text>: display “C ”, followed by the value of the text variable
     (replace underscore _ symbols with a space )
-    /python/<text>: display “Python ”, followed by the value of the
+    /python/(<text>): display “Python ”, followed by the value of the
     text variable (replace underscore _ symbols with a space )
         The default value of text is “is cool”
+    /number/<n>: display “n is a number” only if n is an integer
 You must use the option strict_slashes=False in your route definition
 """
 from flask import Flask
@@ -29,7 +30,7 @@ def hbnb():
     return "HBNB"
 
 
-@app.route('/c/<text>', strict_slashes=False)
+@app.route('/c/(<text>)', strict_slashes=False)
 def c(text):
     """
     returns C ” followed by the value of the text variable
@@ -38,8 +39,8 @@ def c(text):
     text = text.replace('_', ' ')
     return f"C {text}"
 
-@app.route("/python/<text>", strict_slashes=False)
 @app.route("/python", strict_slashes=False)
+@app.route("/python/(<text>)", strict_slashes=False)
 def p(text="is cool"):
     """
     returns “Python ”, followed by the value of the
@@ -47,6 +48,17 @@ def p(text="is cool"):
     """
     text = text.replace('_', ' ')
     return f"Python {text}"
+
+
+@app.route('/number/<n>', strict_slashes=False)
+def number(n):
+    """returns “n is a number” only if n is an integer"""
+    try:
+        int(n)
+        return f"{n} is a number"
+    except ValueError:
+        from flask import abort
+        abort(404)
 
 
 if __name__ == "__main__":
