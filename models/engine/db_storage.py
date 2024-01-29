@@ -40,7 +40,7 @@ class DBStorage:
         """
         objects = {}
         if (cls):
-            for obj in self.__session.query(cls.__name__).all():
+            for obj in self.__session.query(cls).all():
                 key = cls.__name__ + '.' + obj.id
                 objects[key] = obj
         else:
@@ -71,3 +71,10 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(Session)
+
+    def close(self):
+        """
+        call remove() method on the private session attribute
+        (self.__session) tips or close() on the class Session
+        """
+        self.__session.remove()
