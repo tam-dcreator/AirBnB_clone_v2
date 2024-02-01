@@ -4,10 +4,12 @@
 	</head>
 	<body>
 		<h1>States</h1>
+		{% if states %}
 		<ul>
-			{%for key, obj in states.items()%}
-			<li><b>{key}</b>{obj.name}</li>
+			{% for obj in states.values() %}
+			<li><b>{{ obj.id }}</b>{{ obj.name }}</li>
 			{%endfor%}
 		</ul>
+		{% endif %}
 	</body>
 </html>
