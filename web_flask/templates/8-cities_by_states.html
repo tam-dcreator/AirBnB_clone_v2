@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>HBNB</title>
+	</head>
+	<body>
+		<h1>States</h1>
+		{% if citiesandstates %}
+		<ul>
+			{% for obj in citiesandstates.values() %}
+			<li><b>{{ obj.id }}</b>{{ obj.name }}</li>
+			{% if obj.state %}
+			<ul>
+				{% for city in obj.state.values() %}
+				<li><b>{{ city.id }}</b>{{ city.name }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+			{%endfor%}
+		</ul>
+		{% endif %}
+	</body>
+</html>
