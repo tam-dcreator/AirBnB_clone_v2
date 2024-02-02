@@ -13,16 +13,15 @@
                         {%endfor%}
 			{%endfor%}
                 </ul>
-		{%else%}
-		<h1>Not Found</h1>
-                {% endif %}
-		{% if states %}
+		{% elif states %}
 		<h1>States</h1>
 		<ul>
 			{% for state in states.values() %}
 			<li>{{state.id}}: <b>{{ state.name }}</b></li>
 			{%endfor%}
 		</ul>
-		{% endif %}
+		{%else%}
+                <h1>Not Found</h1>
+                {% endif %}
 	</body>
 </html>
