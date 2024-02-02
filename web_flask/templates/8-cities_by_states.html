@@ -4,17 +4,18 @@
 	</head>
 	<body>
 		<h1>States</h1>
-		{% if citiesandstates %}
+		{% if states %}
 		<ul>
-			{% for obj in citiesandstates.values() %}
-			<li><b>{{ obj.id }}</b>{{ obj.name }}</li>
-			{% if obj.state %}
+			{% for state in states.values() %}
+			<li><b>{{ state.id }}</b>{{ state.name }}
+			{% if state.cities %}
 			<ul>
-				{% for city in obj.state.values() %}
+				{% for city in state.cities %}
 				<li><b>{{ city.id }}</b>{{ city.name }}</li>
 				{% endfor %}
 			</ul>
 			{% endif %}
+			</li>
 			{%endfor%}
 		</ul>
 		{% endif %}

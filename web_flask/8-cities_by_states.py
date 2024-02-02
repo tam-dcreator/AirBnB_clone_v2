@@ -32,7 +32,7 @@ app = Flask(__name__)
 def citiesofstate():
     """returns a template with a list of states and their cities"""
     return render_template(
-            '8-cities_by_states.html', citiesandstates=storage.all(State))
+            '8-cities_by_states.html', states=storage.all(State))
 
 
 @app.teardown_appcontext
