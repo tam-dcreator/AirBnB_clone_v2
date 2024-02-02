@@ -6,8 +6,8 @@
 		<h1>States</h1>
 		{% if states %}
 		<ul>
-			{% for obj in states.values() %}
-			<li>{{obj.id}}: <b>{{ obj.name }}</b></li>
+			{% for state in states.values() %}
+			<li>{{state.id}}: <b>{{ state.name }}</b></li>
 			{%endfor%}
 		</ul>
 		{% endif %}

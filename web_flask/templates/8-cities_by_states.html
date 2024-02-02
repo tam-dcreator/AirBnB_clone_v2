@@ -7,11 +7,11 @@
 		{% if states %}
 		<ul>
 			{% for state in states.values() %}
-			<li><b>{{ state.id }}</b>{{ state.name }}
+			<li>{{state.id}}: <b>{{ state.name }}</b>
 			{% if state.cities %}
 			<ul>
 				{% for city in state.cities %}
-				<li><b>{{ city.id }}</b>{{ city.name }}</li>
+				<li>{{city.id}}: <b>{{ city.name }}</b></li>
 				{% endfor %}
 			</ul>
 			{% endif %}
