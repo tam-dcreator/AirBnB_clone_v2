@@ -45,14 +45,11 @@ app = Flask(__name__)
 @app.route('/hbnb')
 def hbnb():
     """returns a a HTML page (100-hbnb.html)"""
-    for place in storage.all(Place).values():
-        print(place.users.first_name)
     return render_template(
                            '100-hbnb.html',
                            states=storage.all(State),
                            amenities=storage.all(Amenity),
-                           places=storage.all(Place), 
-                           users=storage.all(User)
+                           places=storage.all(Place)
                            )
 
 

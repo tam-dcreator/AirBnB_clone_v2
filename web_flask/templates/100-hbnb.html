@@ -74,11 +74,6 @@
 					{%if place.users %}
 					<div class="user"><b>Owner</b>: {{place.users.first_name}} {{place.users.last_name}}</div>
 					{%endif%}
-					{%for user in users%}
-					{%if user_id == user.id%}
-					<div class="user"><b>Owner</b>: {{user.first_name}} {{user.last_name}}</div>
-					{%endif%}
-					{%endfor%}
 					<div class="description">{{place.description}}</div>
 				</article>
 				{% endfor %}
