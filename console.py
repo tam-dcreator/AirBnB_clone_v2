@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import re
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -43,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         """
         _cmd = _cls = _id = _args = ''  # initialize line elements
 
-        # scan for general formating - i.e '.', '(', ')'
+        # scan for general formatting - i.e '.', '(', ')'
         if not ('.' in line and '(' in line and ')' in line):
             return line
 
@@ -58,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
             if _cmd not in HBNBCommand.dot_cmds:
                 raise Exception
 
-            # if parantheses contain arguments, parse them
+            # if parentheses contain arguments, parse them
             pline = pline[pline.find('(') + 1:pline.find(')')]
             if pline:
                 # partition args: (<id>, [<delim>], [<*args>])
@@ -115,13 +116,31 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        # Use regex to separate arguments into keys and value
+        pattern = r'(\w+)="?((?:[^\\" ]|\\.)*)"?'
+        matches = re.findall(pattern, args)
+        # Get the class
+        class_arg = args.split(" ")[0]
+
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif class_arg not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[class_arg]()
+        # Populate the instance with the key and values
+        for key, value in matches:
+            # Convert the digits to their corresponding type
+            if value.isdigit() and not value.startswith('0'):
+                setattr(new_instance, key, int(value))
+            elif not value.startswith('0'):
+                try:
+                    setattr(new_instance, key, float(value))
+                except ValueError:
+                    setattr(new_instance, key, value.replace("_", " "))
+            else:
+                setattr(new_instance, key, value.replace("_", " "))
         storage.save()
         print(new_instance.id)
         storage.save()
