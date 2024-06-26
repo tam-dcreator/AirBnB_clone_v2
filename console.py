@@ -116,31 +116,30 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        # Use regex to separate arguments into keys and value
-        pattern = r'(\w+)="?((?:[^\\" ]|\\.)*)"?'
-        matches = re.findall(pattern, args)
-        # Get the class
-        class_arg = args.split(" ")[0]
 
-        if not args:
+        arglist = args.split(" ")
+        if not arglist[0]:
             print("** class name missing **")
             return
-        elif class_arg not in HBNBCommand.classes:
+        elif arglist[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[class_arg]()
-        # Populate the instance with the key and values
-        for key, value in matches:
-            # Convert the digits to their corresponding type
-            if value.isdigit() and not value.startswith('0'):
-                setattr(new_instance, key, int(value))
-            elif not value.startswith('0'):
-                try:
-                    setattr(new_instance, key, float(value))
-                except ValueError:
-                    setattr(new_instance, key, value.replace("_", " "))
-            else:
-                setattr(new_instance, key, value.replace("_", " "))
+        new_instance = HBNBCommand.classes[arglist[0]]()
+        index = 1
+        while (index < len(arglist)):
+            key_name_value = arglist[index].partition("=")
+            value = key_name_value[2]
+            try:
+                if '.' in value:
+                    value = float(value)
+                else:
+                    value = int(value)
+            except (ValueError):
+                value = value.replace('_', ' ')
+                value = value.strip('"')
+            new_instance.__dict__[key_name_value[0]] = value
+            index += 1
+
         storage.save()
         print(new_instance.id)
         storage.save()
