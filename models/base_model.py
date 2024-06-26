@@ -8,6 +8,7 @@ from sqlalchemy import Column, String, DateTime
 import models
 
 # Create an SQLAlchemy base class
+
 Base = declarative_base()
 
 
@@ -52,6 +53,7 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
+
 
     def to_dict(self):
         """Convert instance into dict format"""
